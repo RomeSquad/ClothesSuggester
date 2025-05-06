@@ -1,4 +1,4 @@
-package org.example.logic.usecase
+package org.example.logic.utils
 
 object ClothingWears {
     const val HEAVY_COAT = "heavy coat"

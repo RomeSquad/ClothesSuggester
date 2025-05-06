@@ -6,5 +6,5 @@ data class Weather(
     val precipitation: Double,
     val windSpeed: Double,
     val humidity: Double,
-    val uvIndex: Double = 0.0
+    val uvIndex: Double
 )

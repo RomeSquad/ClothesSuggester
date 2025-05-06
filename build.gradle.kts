@@ -72,7 +72,7 @@ tasks.jacocoTestCoverageVerification {
     classDirectories.setFrom(
         files(
             fileTree("build/classes/kotlin/main") {
-                exclude("**/entity/**", "**/di/**", "**/exceptions/**", "**/presentation/**")
+                exclude("**/entity/**", "**/di/**", "**/exceptions/**" , "**/presentation/**")
             }
         )
     )

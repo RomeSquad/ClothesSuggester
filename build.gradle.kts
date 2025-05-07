@@ -1,6 +1,5 @@
 plugins {
     kotlin("jvm") version "2.0.21"
-    kotlin("plugin.serialization") version "1.9.0"
     jacoco
 }
 
@@ -16,8 +15,8 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.12.0") // HTTP client for API calls
     implementation("io.insert-koin:koin-core:3.5.6") // Dependency injection
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1") // Coroutines
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.0") // JSON parsing and config loading (updated)
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.23") // Kotlin standard library (explicitly added for clarity)
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.0") // JSON parsing and config loading
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.23") // Kotlin standard library
 
 // Test dependencies
     testImplementation("org.jetbrains.kotlin:kotlin-test:1.9.23") // Kotlin test framework
@@ -73,7 +72,7 @@ tasks.jacocoTestCoverageVerification {
     classDirectories.setFrom(
         files(
             fileTree("build/classes/kotlin/main") {
-                exclude("**/entity/**", "**/di/**", "**/exceptions/**", "**/presentation/**")
+                exclude("**/entity/**", "**/di/**", "**/exceptions/**" , "**/presentation/**")
             }
         )
     )

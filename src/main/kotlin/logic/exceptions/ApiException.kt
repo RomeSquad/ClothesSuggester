@@ -1,5 +1,5 @@
 package logic.exceptions
 
-sealed class ApiException(message: String, cause: Throwable? = null) : Exception(message, cause) {
 
-}
+class NetworkError(message: String) : Exception(message)
+class DataError(message: String) : Exception(message)

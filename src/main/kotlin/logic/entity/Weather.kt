@@ -2,6 +2,9 @@ package logic.entity
 
 
 data class Weather(
-    val id: Long,
-
+    val temperature: Double,
+    val precipitation: Double,
+    val windSpeed: Double,
+    val humidity: Double,
+    val uvIndex: Double
 )

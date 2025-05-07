@@ -29,7 +29,7 @@ class WeatherRepositoryImpl(
             when (e) {
                 is NetworkError -> throw NetworkError("Failed to fetch weather for city '$city': ${e.message}")
                 is DataError -> throw DataError("Invalid weather data for city '$city': ${e.message}")
-                else -> throw DataError("An unexpected error occurred: ${e.message}")
+                else -> throw IllegalStateException("An unexpected error occurred: ${e.message}")
             }
         }
     }

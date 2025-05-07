@@ -27,8 +27,16 @@ class WeatherRepositoryImplTest {
         weatherRepository = WeatherRepositoryImpl(weatherApi, geocodingApi)
     }
 
-    @Test
-    fun `getWeather should return Weather when city is valid and APIs succeed`() = runTest {
+    data class TestData(
+        val city: String,
+        val coordinates: GeocodingDto,
+        val weatherDto: WeatherDto,
+        val expectedWeather: Weather
+    )
+
+    private fun createTestData(
+        uvIndex: Double? = 3.0 // Allow customization of uvIndex for flexibility
+    ): TestData {
         val city = "London"
         val coordinates = GeocodingDto(latitude = 51.5074, longitude = -0.1278)
         val weatherDto = WeatherDto(
@@ -36,47 +44,50 @@ class WeatherRepositoryImplTest {
             precipitation = 0.2,
             windSpeed = 10.0,
             humidity = 80.0,
-            uvIndex = 3.0
+            uvIndex = uvIndex
         )
         val expectedWeather = Weather(
             temperature = 15.0,
             precipitation = 0.2,
             windSpeed = 10.0,
             humidity = 80.0,
-            uvIndex = 3.0
+            uvIndex = uvIndex ?: 0.0 // Default to 0.0 if uvIndex is null
         )
-        coEvery { geocodingApi.fetchCoordinates(city) } returns coordinates
-        coEvery { weatherApi.fetchWeather(coordinates.latitude, coordinates.longitude) } returns weatherDto
+        return TestData(city, coordinates, weatherDto, expectedWeather)
+    }
 
-        val result = weatherRepository.getWeather(city)
+    @Test
+    fun `getWeather should return Weather when city is valid and APIs succeed`() = runTest {
+        val testData = createTestData()
 
-        assertEquals(expectedWeather, result)
+        coEvery { geocodingApi.fetchCoordinates(testData.city) } returns testData.coordinates
+        coEvery {
+            weatherApi.fetchWeather(
+                testData.coordinates.latitude,
+                testData.coordinates.longitude
+            )
+        } returns testData.weatherDto
+
+        val result = weatherRepository.getWeather(testData.city)
+
+        assertEquals(testData.expectedWeather, result)
     }
 
     @Test
     fun `getWeather should return Weather with default uvIndex when uvIndex is null`() = runTest {
-        val city = "London"
-        val coordinates = GeocodingDto(latitude = 51.5074, longitude = -0.1278)
-        val weatherDto = WeatherDto(
-            temperature = 15.0,
-            precipitation = 0.2,
-            windSpeed = 10.0,
-            humidity = 80.0,
-            uvIndex = null
-        )
-        val expectedWeather = Weather(
-            temperature = 15.0,
-            precipitation = 0.2,
-            windSpeed = 10.0,
-            humidity = 80.0,
-            uvIndex = 0.0
-        )
-        coEvery { geocodingApi.fetchCoordinates(city) } returns coordinates
-        coEvery { weatherApi.fetchWeather(coordinates.latitude, coordinates.longitude) } returns weatherDto
+        val testData = createTestData(uvIndex = null)
 
-        val result = weatherRepository.getWeather(city)
+        coEvery { geocodingApi.fetchCoordinates(testData.city) } returns testData.coordinates
+        coEvery {
+            weatherApi.fetchWeather(
+                testData.coordinates.latitude,
+                testData.coordinates.longitude
+            )
+        } returns testData.weatherDto
 
-        assertEquals(expectedWeather, result)
+        val result = weatherRepository.getWeather(testData.city)
+
+        assertEquals(testData.expectedWeather, result)
     }
 
     @Test

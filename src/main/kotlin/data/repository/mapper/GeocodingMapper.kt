@@ -8,14 +8,6 @@ import org.example.data.api.models.GeocodingDto
 class GeocodingMapper {
     private val mapper = jacksonObjectMapper()
 
-    /**
-     * Maps a JSON string to a GeocodingDto object.
-     *
-     * @param jsonString The JSON string to parse.
-     * @param city The name of the city for which coordinates are being fetched.
-     * @return A GeocodingDto object containing the latitude and longitude.
-     * @throws DataError if the JSON is invalid or if the city is not found.
-     */
     fun toCoordinates(jsonString: String, city: String): GeocodingDto {
         val json = try {
             mapper.readTree(jsonString)

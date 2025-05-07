@@ -8,13 +8,6 @@ import org.example.data.api.models.WeatherDto
 class WeatherMapper {
     private val mapper = jacksonObjectMapper()
 
-    /**
-     * Maps a JSON string to a WeatherDto object.
-     *
-     * @param jsonString The JSON string to parse.
-     * @return A WeatherDto object containing the weather data.
-     * @throws DataError if the JSON is invalid or if the city is not found.
-     */
     fun toWeather(jsonString: String): WeatherDto {
         val json = try {
             mapper.readTree(jsonString)

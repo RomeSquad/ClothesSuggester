@@ -1,8 +1,10 @@
 package org.example.data.api.network
 
-data class NetworkConfig(
-    val weatherBaseUrl: String = "https://api.open-meteo.com/v1/forecast",
-    val geocodingBaseUrl: String = "https://geocoding-api.open-meteo.com/v1/search",
-    val weatherParams: String = "current=temperature_2m,precipitation,wind_speed_10m,relative_humidity_2m",
-    val geocodingParams: String = "count=1"
-)
+object NetworkConfig {
+    const val WEATHER_API_BASE_URL = "https://api.open-meteo.com/v1/forecast"
+    const val GEOCODING_API_BASE_URL = "https://geocoding-api.open-meteo.com/v1/search"
+    const val WEATHER_PARAMS = "current=temperature_2m,precipitation,wind_speed_10m,relative_humidity_2m"
+    const val GEOCODING_PARAMS = "count=1"
+    const val MAX_RETRIES = 5
+    const val RETRY_DELAY = 1000L
+}

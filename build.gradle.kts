@@ -25,7 +25,8 @@ dependencies {
         exclude(group = "org.jetbrains.kotlin", module = "kotlin-test-junit") // Avoid conflict with kotlin-test-junit5
     }
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1") // Coroutines testing
-    testImplementation("io.mockk:mockk:1.13.11") // Mocking for tests
+    testImplementation("io.mockk:mockk:1.13.11")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
 }
 tasks.test {
     useJUnitPlatform()

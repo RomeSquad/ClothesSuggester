@@ -1,4 +1,4 @@
-package presentation
+package org.example.presentation.navigation
 
 
 class NavigationController(

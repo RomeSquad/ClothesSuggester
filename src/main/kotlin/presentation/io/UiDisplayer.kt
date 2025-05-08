@@ -1,6 +1,6 @@
 package org.example.presentation.io
 
-import presentation.MenuAction
+import org.example.presentation.action.MenuAction
 
 
 interface UiDisplayer {

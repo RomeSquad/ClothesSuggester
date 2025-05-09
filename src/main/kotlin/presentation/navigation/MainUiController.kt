@@ -1,6 +1,9 @@
 package org.example.presentation.navigation
 
+import logic.entity.Weather
 import org.example.logic.usecase.GetWeatherUseCase
+import org.example.logic.usecase.SuggestClothingUseCase
+import org.example.presentation.action.GetClothesSuggestionsMenuAction
 import org.example.presentation.action.HomeMenuAction
 import org.example.presentation.io.InputReader
 import org.example.presentation.io.UiDisplayer
@@ -18,25 +21,38 @@ class MainUiController(
     }
 
     override fun onNavigate(route: Route) {
+        val weather: Weather? = null
         when (route) {
             is Route.Home -> HomeMenuAction(
-                options = listOf(Route.ShowWeather, Route.SuggestClothes),
+                options = listOf(Route.ShowWeather, Route.SuggestClothes(null)),
                 ui = viewer,
                 inputReader = reader,
-                navigateToSuggestScreen = { navigationController.navigateTo(Route.SuggestClothes) },
+                navigateToSuggestScreen = { navigationController.navigateTo(Route.SuggestClothes(null)) },
                 navigateToShowWeatherScreen = { navigationController.navigateTo(Route.ShowWeather) },
-                retryAgain = { navigationController.navigateTo(Route.Home,false) },
+                retryAgain = { navigationController.navigateTo(Route.Home, false) },
                 exit = { onFinish() }
             ).invoke()
+
             is Route.ShowWeather -> GetWeatherMenuAction(
                 getWeatherUseCase = getWeatherUseCase,
                 ui = viewer,
                 inputReader = reader,
-                navigateToSuggestScreen = { navigationController.navigateTo(Route.SuggestClothes) },
-                retryAgain = { navigationController.navigateTo(Route.ShowWeather) },
+                navigateToSuggestScreen = { weather ->
+                    navigationController.navigateTo(Route.SuggestClothes(weather))
+                },
+                retryAgain = { navigationController.navigateTo(Route.ShowWeather,false) },
                 navigateBack = { navigationController.popBackStack() }
             ).invoke()
-            Route.SuggestClothes -> TODO()
+
+            is Route.SuggestClothes -> GetClothesSuggestionsMenuAction(
+                weather = route.weather,
+                suggestClothingUseCase = SuggestClothingUseCase(),
+                getWeatherUseCase = getWeatherUseCase,
+                ui = viewer,
+                inputReader = reader,
+                retryAgain = { navigationController.navigateTo(Route.SuggestClothes(route.weather),false) },
+                navigateBack = { navigationController.popBackStack() }
+            ).invoke()
         }
     }
 

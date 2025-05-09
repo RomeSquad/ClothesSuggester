@@ -1,7 +1,7 @@
 package org.example.presentation.navigation
 
-sealed interface Route {
-    data object Home : Route
-    data object SuggestClothes : Route
-    data object ShowWeather : Route
+sealed class Route(val description: String) {
+    data object Home : Route("Home")
+    data object SuggestClothes : Route("Suggest Clothes")
+    data object ShowWeather : Route("Show Weather")
 }

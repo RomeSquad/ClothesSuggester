@@ -25,7 +25,7 @@ class NavigationController(
         if (addToBackStack) {
             navigationBackStack.add(currentRoute)
         }
-        println("back stack  $navigationBackStack")
+//        println("back stack  $navigationBackStack")
         navigationCallBack.onNavigate(destination)
     }
 }

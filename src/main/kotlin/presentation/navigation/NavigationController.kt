@@ -2,7 +2,7 @@ package org.example.presentation.navigation
 
 
 class NavigationController(
-    private val startDestination: Route = Route.ShowWeather
+    private val startDestination: Route = Route.Home
 ) {
     private var navigationBackStack: MutableList<Route> = mutableListOf()
     private lateinit var navigationCallBack: NavigationCallBack

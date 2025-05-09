@@ -1,7 +1,9 @@
 package org.example.presentation.navigation
 
-sealed interface Route {
-    data object Home : Route
-    data object SuggestClothes : Route
-    data object ShowWeather : Route
+import logic.entity.Weather
+
+sealed class Route(val description: String) {
+    data object Home : Route("Home")
+    data class SuggestClothes(val weather: Weather? = null) : Route("Suggest Clothes")
+    data object ShowWeather : Route("Show Weather")
 }

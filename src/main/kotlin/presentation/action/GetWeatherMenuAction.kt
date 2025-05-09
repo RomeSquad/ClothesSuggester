@@ -36,6 +36,13 @@ class GetWeatherMenuAction(
                 ui.displayMessage("Temperature: ${result.temperature}°C")
                 ui.displayMessage("Humidity: ${result.humidity}%")
                 ui.displayMessage("Wind Speed: ${result.windSpeed} m/s")
+                ui.displayMessage("======================================")
+                ui.displayMessage("Do you want to retry? (yes/no)")
+                if (inputReader.readString() in "yes") {
+                    retryAgain()
+                } else {
+                    navigateBack()
+                }
             }.onFailure {
                 ui.displayMessage("Failed To get result for your input : ${it.message}")
                 ui.displayMessage("Do you want to retry? (yes/no)")
